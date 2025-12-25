@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Brew Result</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body style="background-color:#0b1e3d; color:#fff; text-align:center; padding:50px; font-family: monospace;">
+    {% if tea %}
+        <h1>Brew this tea!</h1>
+        <h2>{{ tea.name }}{% if tea.type %} ({{ tea.type }}){% endif %}</h2>
+        <p>Amount left: {{ tea.amount }} g</p>
+        {% if tea.notes %}
+            <p>Notes: {{ tea.notes | nl2br }}</p>
+        {% endif %}
+        <form method="POST" style="margin-top:30px;">
+            <textarea name="review" placeholder="Optional: add your brewing notes" rows="3" cols="40" style="font-family: monospace;"></textarea>
+            <br><br>
+            <button type="submit" style="font-size:2em; padding:20px 50px; border:none; border-radius:15px; cursor:pointer; background-color:#1e3a6f; color:#fff;">
+                Brew ✅
+            </button>
+        </form>
+        <br>
+        <a href="{{ url_for('brew') }}" style="color:#9fd3ff;">Back</a>
+    {% else %}
+        <h1>No tea available at {{ location }}!</h1>
+        <a href="{{ url_for('brew') }}" style="color:#9fd3ff;">Back</a>
+    {% endif %}
+</body>
+</html>

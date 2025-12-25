@@ -1,48 +1,55 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Tea Inventory</title>
-    <link rel="stylesheet" href="/static/style.css">
+    <title>Tea Admin</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-<div class="container">
+    <h1>Admin: Your Tea Collection</h1>
 
-    <h1>🍵 Tea Inventory</h1>
-
-    <h2>Add tea</h2>
-    <form method="post">
-        <p>
-            <input type="text" name="name" placeholder="Tea name" required>
-        </p>
-        <p>
-            <input type="text" name="type" placeholder="Type (oolong, black…)">
-        </p>
-        <p>
-            <input type="number" step="0.1" name="dose" placeholder="Default dose (g)">
-        </p>
-        <p>
-            <textarea name="notes" placeholder="Notes"></textarea>
-        </p>
-        <button type="submit">Add</button>
+    <h2>Add new tea</h2>
+    <form method="POST">
+        <input type="text" name="name" placeholder="Tea name" required>
+        <input type="text" name="type" placeholder="Type">
+        <input type="number" name="dose" placeholder="Default dose (g)" step="0.1">
+        <input type="text" name="seller" placeholder="Seller">
+        <input type="number" name="price" placeholder="Price per gram" step="0.01">
+        <input type="number" name="grams_bought" placeholder="Grams bought" step="0.1">
+        <input type="text" name="notes" placeholder="Notes">
+        <button type="submit" name="add_tea">Add Tea</button>
     </form>
 
-    <h2>Your teas</h2>
-
+    <h2>Edit teas</h2>
     {% if teas %}
-        <ul>
+    <form method="POST">
+    <table border="1" cellpadding="5" style="table-layout: fixed; width:100%;">
+        <tr>
+            <th>Tea</th><th>Type</th><th>Default Dose</th><th>Seller</th><th>Price/g</th><th>Grams Bought</th><th>Notes</th><th>Home (g)</th><th>Work (g)</th><th>Remove</th>
+        </tr>
         {% for tea in teas %}
-            <li>
-                <strong>{{ tea.name }}</strong>
-                {% if tea.type %} ({{ tea.type }}){% endif %}
-                {% if tea.default_dose %} — {{ tea.default_dose }} g{% endif %}
-            </li>
+        <tr>
+            <td><input type="text" name="name_{{tea.id}}" value="{{tea.name}}"></td>
+            <td><input type="text" name="type_{{tea.id}}" value="{{tea.type or ''}}"></td>
+            <td><input type="number" step="0.1" name="dose_{{tea.id}}" value="{{tea.default_dose or 4}}"></td>
+            <td><input type="text" name="seller_{{tea.id}}" value="{{tea.seller or ''}}"></td>
+            <td><input type="number" step="0.01" name="price_{{tea.id}}" value="{{tea.price_per_gram or 0}}"></td>
+            <td><input type="number" step="0.1" name="grams_bought_{{tea.id}}" value="{{tea.grams_bought or 0}}"></td>
+            <td><input type="text" name="notes_{{tea.id}}" value="{{tea.notes or ''}}"></td>
+            <td><input type="number" step="0.1" name="home_{{tea.id}}" value="{{tea.home_amount or 0}}" style="width:60px;"></td>
+            <td><input type="number" step="0.1" name="work_{{tea.id}}" value="{{tea.work_amount or 0}}" style="width:60px;"></td>
+            <td>
+                <button type="submit" name="remove_tea" value="{{tea.id}}" style="background:red; color:white;">Remove</button>
+            </td>
+        </tr>
         {% endfor %}
-        </ul>
+    </table>
+    <button type="submit" name="update_tea" style="margin-top:10px;">Update All</button>
+    </form>
+
     {% else %}
-        <p><em>No teas yet.</em></p>
+    <p><em>No teas yet.</em></p>
     {% endif %}
 
-</div>
+    <p><a href="{{ url_for('brew') }}">Go to Brew Page</a></p>
 </body>
 </html>

@@ -8,3 +8,21 @@ input, textarea, button {
 button {
     cursor: pointer;
 }
+
+body {
+    font-family: "Courier New", Courier, monospace;
+}
+
+input, button {
+    font-family: monospace;
+}
+
+table {
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 5px 10px;
+    text-align: center;
+}

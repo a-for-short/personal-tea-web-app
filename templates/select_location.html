@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Select Location</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body style="background-color:#0b1e3d; color:#fff; text-align:center; padding:50px; font-family: monospace;">
+    <h1>Where are you brewing?</h1>
+    <form method="POST" style="margin-top:40px;">
+        <button name="location" value="home" style="font-size:2em; padding:40px 60px; margin:20px; border:none; border-radius:15px; background-color:#1e3a6f; color:#fff; cursor:pointer;">🏠 Home</button>
+        <button name="location" value="work" style="font-size:2em; padding:40px 60px; margin:20px; border:none; border-radius:15px; background-color:#1e3a6f; color:#fff; cursor:pointer;">💼 Work</button>
+    </form>
+</body>
+</html>
