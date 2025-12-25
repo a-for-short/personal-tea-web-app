@@ -1,0 +1,10 @@
+input, textarea, button {
+    font-family: monospace;
+    padding: 6px;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+button {
+    cursor: pointer;
+}
