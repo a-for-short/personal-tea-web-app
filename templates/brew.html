@@ -4,11 +4,20 @@
     <title>Brew Tea</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-<body style="background-color:#0b1e3d; color:#fff; text-align:center; padding:50px; font-family: monospace;">
-    <form method="POST">
-        <button type="submit" style="font-size:3em; padding:50px 80px; border:none; border-radius:20px; cursor:pointer; background-color:#1e3a6f; color:#fff;">
-            Brew Tea
-        </button>
-    </form>
+<body class="brew-page">
+    <div class="brew-container">
+        <h1>✨ Tea Time ✨</h1>
+        <p class="subtitle">Ready to brew some delicious tea?</p>
+        
+        <form method="POST" class="brew-form">
+            <button type="submit" class="brew-button">
+                🍵 Brew Tea
+            </button>
+        </form>
+        
+        <!--<div class="brew-stats" style="margin-top: 40px; opacity: 0.8;">
+            <p>Total teas available: {{ total_teas }}</p>
+        </div>-->
+    </div>
 </body>
 </html>

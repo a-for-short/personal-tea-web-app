@@ -3,53 +3,179 @@
 <head>
     <title>Tea Admin</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .location-column {
+            min-width: 80px;
+        }
+        .locations-management {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .input-sm {
+            padding: 8px 10px;
+            font-size: 13px;
+            width: 100%;
+        }
+        .location-input {
+            width: 70px;
+            text-align: center;
+        }
+        .btn-primary {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .btn-danger {
+            background: #fc8181;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .btn-danger:hover {
+            background: #f56565;
+        }
+        .table-container {
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background: #f0f0f0;
+            font-weight: bold;
+        }
+        .empty-state {
+            text-align: center;
+            color: #888;
+            padding: 40px;
+            font-style: italic;
+        }
+    </style>
 </head>
 <body>
-    <h1>Admin: Your Tea Collection</h1>
+    <div style="max-width: 1400px; margin: 0 auto; padding: 20px;">
+        <h1>🍵 Tea Collection Admin</h1>
 
-    <h2>Add new tea</h2>
-    <form method="POST">
-        <input type="text" name="name" placeholder="Tea name" required>
-        <input type="text" name="type" placeholder="Type">
-        <input type="number" name="dose" placeholder="Default dose (g)" step="0.1">
-        <input type="text" name="seller" placeholder="Seller">
-        <input type="number" name="price" placeholder="Price per gram" step="0.01">
-        <input type="number" name="grams_bought" placeholder="Grams bought" step="0.1">
-        <input type="text" name="notes" placeholder="Notes">
-        <button type="submit" name="add_tea">Add Tea</button>
-    </form>
+        <!-- Управление локациями -->
+        <div class="locations-management">
+            <h3>Manage Locations</h3>
+            <form method="POST" style="display: flex; gap: 10px; align-items: flex-end;">
+                <div>
+                    <label>Location Name (ID):</label>
+                    <input type="text" name="location_name" placeholder="e.g., parents" required>
+                </div>
+                <div>
+                    <label>Display Name:</label>
+                    <input type="text" name="location_desc" placeholder="e.g., 👨‍👩‍👧 Parents House">
+                </div>
+                <button type="submit" name="add_location" class="btn-primary">Add Location</button>
+            </form>
+        </div>
 
-    <h2>Edit teas</h2>
-    {% if teas %}
-    <form method="POST">
-    <table border="1" cellpadding="5" style="table-layout: fixed; width:100%;">
-        <tr>
-            <th>Tea</th><th>Type</th><th>Default Dose</th><th>Seller</th><th>Price/g</th><th>Grams Bought</th><th>Notes</th><th>Home (g)</th><th>Work (g)</th><th>Remove</th>
-        </tr>
-        {% for tea in teas %}
-        <tr>
-            <td><input type="text" name="name_{{tea.id}}" value="{{tea.name}}"></td>
-            <td><input type="text" name="type_{{tea.id}}" value="{{tea.type or ''}}"></td>
-            <td><input type="number" step="0.1" name="dose_{{tea.id}}" value="{{tea.default_dose or 4}}"></td>
-            <td><input type="text" name="seller_{{tea.id}}" value="{{tea.seller or ''}}"></td>
-            <td><input type="number" step="0.01" name="price_{{tea.id}}" value="{{tea.price_per_gram or 0}}"></td>
-            <td><input type="number" step="0.1" name="grams_bought_{{tea.id}}" value="{{tea.grams_bought or 0}}"></td>
-            <td><input type="text" name="notes_{{tea.id}}" value="{{tea.notes or ''}}"></td>
-            <td><input type="number" step="0.1" name="home_{{tea.id}}" value="{{tea.home_amount or 0}}" style="width:60px;"></td>
-            <td><input type="number" step="0.1" name="work_{{tea.id}}" value="{{tea.work_amount or 0}}" style="width:60px;"></td>
-            <td>
-                <button type="submit" name="remove_tea" value="{{tea.id}}" style="background:red; color:white;">Remove</button>
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
-    <button type="submit" name="update_tea" style="margin-top:10px;">Update All</button>
-    </form>
+        <!-- Добавление чая -->
+        <div style="background: white; border-radius: 10px; padding: 20px; margin: 20px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+            <h2>Add New Tea</h2>
+            <form method="POST">
+                <div class="form-grid">
+                    <input type="text" name="name" placeholder="Tea name *" required>
+                    <input type="text" name="type" placeholder="Type (green, black, oolong)">
+                    <input type="number" name="dose" placeholder="Default dose (g)" step="0.1" value="4.0">
+                    <input type="text" name="seller" placeholder="Seller">
+                    <input type="number" name="price" placeholder="Price per gram" step="0.01">
+                    <input type="number" name="grams_bought" placeholder="Grams bought" step="0.1">
+                    <input type="text" name="notes" placeholder="Notes">
+                </div>
+                <button type="submit" name="add_tea" class="btn-primary">➕ Add Tea</button>
+            </form>
+        </div>
 
-    {% else %}
-    <p><em>No teas yet.</em></p>
-    {% endif %}
+        <!-- Редактирование чаев -->
+        <div style="background: white; border-radius: 10px; padding: 20px; margin: 20px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+            <h2>Your Tea Collection</h2>
+            {% if teas %}
+            <form method="POST">
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Tea Name</th>
+                                <th>Type</th>
+                                <th>Dose (g)</th>
+                                <th>Seller</th>
+                                <th>Price/g</th>
+                                <th>Bought (g)</th>
+                                <th>Notes</th>
+                                {% for loc in locations %}
+                                <th class="location-column">{{ loc.description or loc.name }}</th>
+                                {% endfor %}
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for tea in teas %}
+                            <tr>
+                                <td><input type="text" name="name_{{tea.id}}" value="{{tea.name}}" class="input-sm" required></td>
+                                <td><input type="text" name="type_{{tea.id}}" value="{{tea.type or ''}}" class="input-sm"></td>
+                                <td><input type="number" step="0.1" name="dose_{{tea.id}}" value="{{tea.default_dose or 4.0}}" class="input-sm"></td>
+                                <td><input type="text" name="seller_{{tea.id}}" value="{{tea.seller or ''}}" class="input-sm"></td>
+                                <td><input type="number" step="0.01" name="price_{{tea.id}}" value="{{tea.price_per_gram or 0}}" class="input-sm"></td>
+                                <td><input type="number" step="0.1" name="grams_bought_{{tea.id}}" value="{{tea.grams_bought or 0}}" class="input-sm"></td>
+                                <td><input type="text" name="notes_{{tea.id}}" value="{{tea.notes or ''}}" class="input-sm"></td>
+                                
+                                {% for loc in locations %}
+                                <td>
+                                    <input type="number" step="0.1" 
+                                           name="location_{{loc.id}}_{{tea.id}}"
+                                           value="{{ tea.locations.get(loc.id, 0) }}"
+                                           class="input-sm location-input">
+                                </td>
+                                {% endfor %}
+                                
+                                <td>
+                                    <button type="submit" name="remove_tea" value="{{tea.id}}" 
+                                            class="btn-danger"
+                                            onclick="return confirm('Delete this tea?')">🗑️</button>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div style="margin-top: 20px; text-align: center;">
+                    <button type="submit" name="update_tea" class="btn-primary">💾 Save All Changes</button>
+                </div>
+            </form>
+            {% else %}
+            <p class="empty-state">No teas yet. Add your first tea above!</p>
+            {% endif %}
+        </div>
 
-    <p><a href="{{ url_for('brew') }}">Go to Brew Page</a></p>
+        <div style="text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid #eee;">
+            <a href="{{ url_for('brew') }}" style="background: linear-gradient(45deg, #00b09b, #96c93d); color: white; padding: 15px 30px; border-radius: 10px; text-decoration: none; font-weight: bold; display: inline-block;">
+                🚀 Go to Brew Page
+            </a>
+        </div>
+    </div>
 </body>
 </html>

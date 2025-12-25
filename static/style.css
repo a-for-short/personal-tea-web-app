@@ -1,28 +1,270 @@
-input, textarea, button {
-    font-family: monospace;
-    padding: 6px;
-    width: 100%;
-    margin-bottom: 10px;
-}
-
-button {
-    cursor: pointer;
+/* Основные стили */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-    font-family: "Courier New", Courier, monospace;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background: #f8f9fa;
 }
 
-input, button {
-    font-family: monospace;
+/* Контейнеры */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
 }
 
-table {
-    border-collapse: collapse;
-    margin-top: 20px;
+/* Формы */
+input, textarea, select, button {
+    font-family: inherit;
+    font-size: 14px;
 }
 
-th, td {
-    padding: 5px 10px;
+input, textarea, select {
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    width: 100%;
+    transition: border-color 0.3s;
+}
+
+input:focus, textarea:focus, select:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+/* Кнопки */
+button, .btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-primary {
+    background: linear-gradient(45deg, #667eea, #764ba2);
+    color: white;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+}
+
+.btn-danger {
+    background: #fc8181;
+    color: white;
+}
+
+.btn-danger:hover {
+    background: #f56565;
+}
+
+/* Страница заваривания */
+.brew-page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
     text-align: center;
+}
+
+.brew-container {
+    width: 100%;
+    max-width: 600px;
+}
+
+.brew-button {
+    background: linear-gradient(45deg, #00b09b, #96c93d);
+    color: white;
+    border: none;
+    padding: 25px 60px;
+    font-size: 1.8em;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 40px; /* Увеличенный отступ */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    display: inline-block;
+}
+
+.brew-button:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+}
+
+/* Карточка чая */
+.tea-card {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 30px;
+    margin: 30px auto;
+    max-width: 500px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.tea-type {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 5px 15px;
+    border-radius: 20px;
+    margin: 10px 0;
+    font-size: 0.9em;
+}
+
+.tea-details {
+    text-align: left;
+    margin: 20px 0;
+}
+
+.tea-details p {
+    margin: 10px 0;
+}
+
+.tea-notes {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 15px;
+    border-radius: 10px;
+    margin: 20px 0;
+    text-align: left;
+}
+
+.notes-content {
+    white-space: pre-line;
+    line-height: 1.6;
+}
+
+/* Поле для отзыва */
+textarea {
+    width: 100%;
+    min-height: 100px;
+    margin: 20px 0;
+    padding: 15px;
+    border-radius: 10px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    font-family: 'Courier New', monospace;
+    resize: vertical;
+}
+
+textarea::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+/* Кнопка заварить */
+.brew-button-large {
+    background: linear-gradient(45deg, #00b09b, #96c93d);
+    color: white;
+    border: none;
+    padding: 20px 50px;
+    font-size: 1.5em;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin: 20px 0;
+}
+
+.brew-button-large:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0, 176, 155, 0.3);
+}
+
+/* Ссылки */
+a {
+    color: #9fd3ff;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+a:hover {
+    color: #7bc0ff;
+    text-decoration: underline;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .location-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .location-button {
+        width: 100%;
+        max-width: 300px;
+    }
+    
+    .brew-button {
+        padding: 20px 40px;
+        font-size: 1.5em;
+    }
+    
+    h1 {
+        font-size: 2em;
+    }
+}
+
+/* Добавьте в конец файла: */
+
+/* Анимация загрузки */
+.loading {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255,255,255,.3);
+    border-radius: 50%;
+    border-top-color: #fff;
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Уведомления */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 15px 20px;
+    background: #4CAF50;
+    color: white;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    z-index: 1000;
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+/* Улучшенные стили для таблицы */
+th {
+    position: sticky;
+    top: 0;
+    background: #f8f9fa;
+    z-index: 10;
+}
+
+/* Контейнер для предотвращения выхода за пределы */
+.table-wrapper {
+    max-height: 70vh;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin: 20px 0;
 }

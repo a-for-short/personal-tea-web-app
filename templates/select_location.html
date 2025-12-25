@@ -3,12 +3,133 @@
 <head>
     <title>Select Location</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            background: linear-gradient(135deg, #0b1e3d 0%, #1a365d 100%);
+            color: white;
+            text-align: center;
+            min-height: 100vh;
+            padding: 50px 20px;
+            font-family: 'Courier New', monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .brew-container {
+            max-width: 800px;
+            width: 100%;
+        }
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+        .subtitle {
+            font-size: 1.2em;
+            margin-bottom: 50px;
+            color: #9fd3ff;
+        }
+        .location-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin: 40px 0;
+        }
+        .location-button {
+            background: linear-gradient(45deg, #1e3a6f, #2d4b8f);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            padding: 25px 20px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: all 0.3s;
+            min-width: 180px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .location-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            background: linear-gradient(45deg, #2d4b8f, #3c5ba9);
+        }
+        .location-button.empty {
+            opacity: 0.6;
+            background: linear-gradient(45deg, #2d3748, #4a5568);
+        }
+        .location-button.empty:hover {
+            transform: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            background: linear-gradient(45deg, #2d3748, #4a5568);
+        }
+        .location-icon {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        .location-name {
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .location-count {
+            font-size: 0.9em;
+            color: #9fd3ff;
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 30px;
+            color: #9fd3ff;
+            text-decoration: none;
+            font-size: 1.1em;
+            padding: 10px 20px;
+            border: 1px solid #9fd3ff;
+            border-radius: 5px;
+        }
+        .back-link:hover {
+            background: rgba(159, 211, 255, 0.1);
+        }
+    </style>
 </head>
-<body style="background-color:#0b1e3d; color:#fff; text-align:center; padding:50px; font-family: monospace;">
-    <h1>Where are you brewing?</h1>
-    <form method="POST" style="margin-top:40px;">
-        <button name="location" value="home" style="font-size:2em; padding:40px 60px; margin:20px; border:none; border-radius:15px; background-color:#1e3a6f; color:#fff; cursor:pointer;">🏠 Home</button>
-        <button name="location" value="work" style="font-size:2em; padding:40px 60px; margin:20px; border:none; border-radius:15px; background-color:#1e3a6f; color:#fff; cursor:pointer;">💼 Work</button>
-    </form>
+<body>
+    <div class="brew-container">
+        <h1>📍 Где вы завариваете чай?</h1>
+        
+        {% if locations %}
+            <p class="subtitle">Выберите локацию, где вы сейчас находитесь</p>
+            
+            <form method="POST">
+                <div class="location-buttons">
+                    {% for location in locations %}
+                    <button type="submit" 
+                            name="location" 
+                            value="{{ location.id }}" 
+                            class="location-button {% if location.tea_count == 0 %}empty{% endif %}"
+                            {% if location.tea_count == 0 %}disabled{% endif %}>
+                        <div class="location-icon">
+                            {% if 'дом' in location.description.lower() %}🏠
+                            {% elif 'работа' in location.description.lower() %}💼
+                            {% elif 'родител' in location.description.lower() %}👨‍👩‍👧
+                            {% else %}📍{% endif %}
+                        </div>
+                        <div class="location-name">{{ location.description or location.name }}</div>
+                        <div class="location-count">
+                            {% if location.tea_count == 0 %}
+                                Нет чая
+                            {% else %}
+                                {{ location.tea_count }} чаев доступно
+                            {% endif %}
+                        </div>
+                    </button>
+                    {% endfor %}
+                </div>
+            </form>
+        {% else %}
+            <p class="subtitle">Нет доступных локаций. Добавьте локации в админ-панели.</p>
+        {% endif %}
+        
+        <div style="margin-top: 50px;">
+            <a href="{{ url_for('brew') }}" class="back-link">← Назад к выбору чая</a>
+        </div>
+    </div>
 </body>
 </html>

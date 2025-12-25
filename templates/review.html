@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Leave a note</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="center">
+    <div class="card">
+        <h1>Any notes?</h1>
+        <p>Future you will thank you</p>
+
+        <form method="POST">
+            <textarea name="notes" rows="5"
+                style="width:100%; margin-top:1rem;"></textarea>
+
+            <button style="margin-top:2rem;">Save</button>
+        </form>
+
+        <form action="/brew" style="margin-top:1rem;">
+            <button class="secondary">Skip</button>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>
