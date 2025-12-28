@@ -1,1 +1,34 @@
-.venv
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+venv/
+env/
+.venv/
+env.bak/
+venv.bak/
+
+# Environment variables (sensitive!)
+.env
+.env.local
+.env.*.local
+
+# Database files (generated data, not source)
+*.db
+data/  # This contains your SQLite database and logs
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs (generated at runtime)
+*.log
+logs/  # If you have separate logs directory

@@ -13,9 +13,8 @@
         <p>Future you will thank you</p>
 
         <form method="POST">
-            <textarea name="notes" rows="5"
-                style="width:100%; margin-top:1rem;"></textarea>
-
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <textarea name="notes" rows="5" style="width:100%; margin-top:1rem;"></textarea>
             <button style="margin-top:2rem;">Save</button>
         </form>
 

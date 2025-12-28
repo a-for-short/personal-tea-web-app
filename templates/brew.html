@@ -10,14 +10,11 @@
         <p class="subtitle">Ready to brew some delicious tea?</p>
         
         <form method="POST" class="brew-form">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
             <button type="submit" class="brew-button">
                 🍵 Brew Tea
             </button>
         </form>
-        
-        <!--<div class="brew-stats" style="margin-top: 40px; opacity: 0.8;">
-            <p>Total teas available: {{ total_teas }}</p>
-        </div>-->
     </div>
 </body>
 </html>

@@ -92,12 +92,11 @@
 </head>
 <body>
     <div class="brew-container">
-        <h1>📍 Где вы завариваете чай?</h1>
+        <h1>Where are you brewing?</h1>
         
         {% if locations %}
-            <p class="subtitle">Выберите локацию, где вы сейчас находитесь</p>
-            
             <form method="POST">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                 <div class="location-buttons">
                     {% for location in locations %}
                     <button type="submit" 
@@ -106,17 +105,17 @@
                             class="location-button {% if location.tea_count == 0 %}empty{% endif %}"
                             {% if location.tea_count == 0 %}disabled{% endif %}>
                         <div class="location-icon">
-                            {% if 'дом' in location.description.lower() %}🏠
-                            {% elif 'работа' in location.description.lower() %}💼
-                            {% elif 'родител' in location.description.lower() %}👨‍👩‍👧
+                            {% if 'home' in location.description.lower() %}🏠
+                            {% elif 'work' in location.description.lower() %}💼
+                            {% elif 'parents' in location.description.lower() %}👨‍👩‍👧
                             {% else %}📍{% endif %}
                         </div>
-                        <div class="location-name">{{ location.description or location.name }}</div>
+                        <div class="location-name">{{ location.description.lower() }}</div>
                         <div class="location-count">
                             {% if location.tea_count == 0 %}
-                                Нет чая
+                                No tea
                             {% else %}
-                                {{ location.tea_count }} чаев доступно
+                                {{ location.tea_count }} teas available
                             {% endif %}
                         </div>
                     </button>
@@ -124,12 +123,8 @@
                 </div>
             </form>
         {% else %}
-            <p class="subtitle">Нет доступных локаций. Добавьте локации в админ-панели.</p>
+            <p class="subtitle">No available locations. Add them on admin page.</p>
         {% endif %}
-        
-        <div style="margin-top: 50px;">
-            <a href="{{ url_for('brew') }}" class="back-link">← Назад к выбору чая</a>
-        </div>
     </div>
 </body>
 </html>

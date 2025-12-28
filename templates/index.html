@@ -81,6 +81,7 @@
         <div class="locations-management">
             <h3>Manage Locations</h3>
             <form method="POST" style="display: flex; gap: 10px; align-items: flex-end;">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                 <div>
                     <label>Location Name (ID):</label>
                     <input type="text" name="location_name" placeholder="e.g., parents" required>
@@ -97,6 +98,7 @@
         <div style="background: white; border-radius: 10px; padding: 20px; margin: 20px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
             <h2>Add New Tea</h2>
             <form method="POST">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                 <div class="form-grid">
                     <input type="text" name="name" placeholder="Tea name *" required>
                     <input type="text" name="type" placeholder="Type (green, black, oolong)">
@@ -115,6 +117,7 @@
             <h2>Your Tea Collection</h2>
             {% if teas %}
             <form method="POST">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                 <div class="table-container">
                     <table>
                         <thead>

@@ -13,6 +13,7 @@
             <p>Notes: {{ tea.notes | nl2br }}</p>
         {% endif %}
         <form method="POST" style="margin-top:30px;">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
             <textarea name="review" placeholder="Optional: add your brewing notes" rows="3" cols="40" style="font-family: monospace;"></textarea>
             <br><br>
             <button type="submit" style="font-size:2em; padding:20px 50px; border:none; border-radius:15px; cursor:pointer; background-color:#1e3a6f; color:#fff;">
